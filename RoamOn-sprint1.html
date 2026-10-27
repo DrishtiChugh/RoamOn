@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RoamOn</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EDF3F6;--sf:#fff;--ink:#0A2540;--mut:#51657A;--ac:#0E7C86;--acs:#D8EEF0;--yl:#FFC145;--nv:#0A2540;--warn:#7A4E00;--warns:#FFF1CF;--bd:#CFDCE3;--err:#B42318;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#08131F;--sf:#11222F;--ink:#E8F0F5;--mut:#9DB2C1;--ac:#5AD1D6;--acs:#14363B;--nv:#050E17;--warn:#F3C969;--warns:#3A2E10;--bd:#27404F;--err:#FF8A80}}
+:root[data-theme="dark"]{--bg:#08131F;--sf:#11222F;--ink:#E8F0F5;--mut:#9DB2C1;--ac:#5AD1D6;--acs:#14363B;--nv:#050E17;--warn:#F3C969;--warns:#3A2E10;--bd:#27404F;--err:#FF8A80}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 "Source Sans 3",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque","Source Sans 3",system-ui,sans-serif;line-height:1.15;margin:0 0 .5rem;letter-spacing:-.01em}
+h2{font-size:1.45rem}h3{font-size:1.1rem}
+header{background:var(--nv);color:#fff;padding:1.6rem 1.25rem 4.2rem;position:relative;overflow:hidden}
+header .in{max-width:960px;margin:auto;position:relative;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.brand{font:700 1rem "Bricolage Grotesque",sans-serif;color:var(--yl);margin:0 0 1rem;display:flex;align-items:center;gap:.5rem}
+.brand i{width:12px;height:12px;border-radius:50%;background:var(--yl);display:inline-block}
+header h1{font-size:clamp(2rem,6vw,3.4rem);max-width:15ch;margin:0 0 .7rem}
+header p{margin:0;color:#B9CCDA;max-width:38ch}
+header svg{width:min(340px,42vw);flex:none}
+@media (max-width:620px){header .in{gap:.6rem}header svg{width:30vw;min-width:96px}header h1{font-size:2rem}header p{max-width:none}}
+main{max-width:960px;margin:-2.6rem auto 0;padding:0 1.25rem 3rem;position:relative}
+nav{display:flex;gap:.3rem;overflow-x:auto;background:var(--sf);border:1px solid var(--bd);border-radius:99px;padding:.35rem;margin-bottom:1.25rem}
+nav button{background:none;border:0;color:var(--mut);font:600 .98rem "Source Sans 3",sans-serif;padding:.55rem 1.1rem;border-radius:99px;cursor:pointer;white-space:nowrap}
+nav button[aria-selected="true"]{background:var(--nv);color:var(--yl)}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:16px;padding:1.4rem;margin-bottom:1rem}
+.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+label{display:block;font-weight:600;font-size:.92rem;margin-bottom:.3rem}
+input,select,textarea{width:100%;padding:.7rem .8rem;border:1.5px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit}
+input:focus,select:focus,textarea:focus{border-color:var(--ac);outline:none;box-shadow:0 0 0 3px var(--acs)}
+textarea{min-height:76px}
+button.b{background:var(--yl);color:#0A2540;border:0;border-radius:10px;padding:.7rem 1.3rem;font:700 1rem "Source Sans 3",sans-serif;cursor:pointer}
+button.b.s{background:none;color:var(--ac);border:1.5px solid var(--ac)}
+button.b.d{background:var(--err);color:#fff}
+:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+.chips label{display:inline-flex;align-items:center;gap:.4rem;font-weight:400;border:1.5px solid var(--bd);border-radius:99px;padding:.35rem .9rem;cursor:pointer;margin:0 .35rem .45rem 0}
+.chips label:has(input:checked){background:var(--acs);border-color:var(--ac);font-weight:600}
+.chips input{width:auto}
+.err{color:var(--err);font-size:.9rem;margin:.4rem 0 0;min-height:1.1em}
+.note{background:var(--warns);color:var(--warn);border-radius:12px;padding:.75rem 1rem;font-size:.93rem;margin-bottom:1rem;border-left:5px solid var(--yl)}
+.ok{background:var(--acs);color:var(--ac);border-left-color:var(--ac)}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.94rem}
+th,td{text-align:left;padding:.65rem .7rem;border-bottom:1px solid var(--bd);vertical-align:top}
+th{color:var(--mut);font-weight:600}
+.st{font-weight:700;padding:.15rem .65rem;border-radius:99px;font-size:.82rem;white-space:nowrap}
+.st.y{background:var(--acs);color:var(--ac)}.st.n{background:var(--warns);color:var(--warn)}
+.day{display:grid;grid-template-columns:6rem 1fr;border:1px solid var(--bd);border-radius:14px;background:var(--bg);margin:.9rem 0;overflow:hidden}
+.day h3{grid-row:1/span 4;grid-column:1;margin:0;background:var(--nv);color:var(--yl);display:flex;align-items:center;justify-content:center;font-size:1.3rem;border-right:3px dotted var(--yl);padding:1rem .5rem}
+.act{grid-column:2;display:grid;grid-template-columns:5.5rem 1fr;gap:.5rem;padding:.7rem 1rem;border-bottom:1px solid var(--bd);margin:0}
+.act:last-child{border-bottom:0}
+.act span.t{color:var(--mut);font-size:.9rem;font-weight:600}
+[contenteditable="true"]{outline:1.5px dashed var(--ac);border-radius:4px;padding:0 .25rem}
+.mut{color:var(--mut);font-size:.93rem}
+ul{padding-left:1.2rem;margin:.3rem 0}
+@media (max-width:480px){.day{grid-template-columns:4.2rem 1fr}.act{grid-template-columns:1fr}.day h3{font-size:1rem}}
+</style>
+</head>
+<body>
+<header><div class="in"><div><p class="brand"><i></i>RoamOn</p><h1>Plan the trip together.</h1><p>One shared plan for the whole group, so no single person carries the planning.</p></div><svg viewBox="0 0 340 150" aria-hidden="true"><path d="M20 120C90 10 250 0 320 100" fill="none" stroke="#FFC145" stroke-width="3" stroke-dasharray="3 9" stroke-linecap="round"/><circle cx="20" cy="120" r="9" fill="#FFC145"/><circle cx="320" cy="100" r="9" fill="none" stroke="#FFC145" stroke-width="3"/><text x="165" y="42" font-size="34" fill="#fff" transform="rotate(8 165 42)">&#9992;</text></svg></div></header>
+<main id="app"></main>
+<script>
+var KEY="roamon_s1_";
+var INTS=["Food","Culture","Adventure","Nature","Relaxation","Nightlife"];
+var ACC=["Budget stay","Mid-range hotel","Premium stay"];
+var ACCC={"Budget stay":1200,"Mid-range hotel":2800,"Premium stay":6000};
+var BANK={
+Goa:[["Fort Aguada and Sinquerim beach walk","Culture",200],["Seafood thali at a beach shack","Food",700],["Water sports at Calangute","Adventure",1500],["Sunset at Chapora Fort","Nature",100],["Spa and beach lounging","Relaxation",1800],["Night market at Arpora","Nightlife",600],["Old Goa churches tour","Culture",300],["Spice plantation visit","Nature",800],["Club night in Baga","Nightlife",1200]],
+Jaipur:[["Amber Fort and Jaigarh","Culture",600],["Rajasthani thali at Chokhi Dhani","Food",1100],["Hot air balloon over Amer","Adventure",9000],["Nahargarh sunset point","Nature",150],["Haveli spa afternoon","Relaxation",2000],["Bapu Bazaar evening walk","Nightlife",500],["City Palace and Jantar Mantar","Culture",700],["Lassi and kachori food trail","Food",400],["Elephant-free Jungle safari at Jhalana","Nature",1500]],
+Manali:[["Solang Valley activities","Adventure",2500],["Old Manali café hopping","Food",800],["Hadimba Temple visit","Culture",100],["Jogini Falls trek","Nature",300],["Riverside rest day","Relaxation",500],["Mall Road evening","Nightlife",400],["Paragliding at Solang","Adventure",3000],["Vashisht hot springs","Relaxation",200],["Himachali dham lunch","Food",600]],
+Kerala:[["Alleppey houseboat cruise","Relaxation",3500],["Kerala sadya lunch","Food",500],["Munnar tea garden walk","Nature",300],["Kathakali performance in Kochi","Culture",400],["Periyar boat safari","Adventure",900],["Fort Kochi night walk","Nightlife",300],["Ayurvedic massage","Relaxation",2200],["Backwater canoe ride","Nature",800],["Seafood tasting at Kumbalangi","Food",900]]};
+var S=null;
+var tab="prefs",ok=false,draft=null,editing=false,msg="";
+function load(c){try{return JSON.parse(localStorage.getItem(KEY+c))}catch(e){return null}}
+function save(){try{localStorage.setItem(KEY+S.code,JSON.stringify(S))}catch(e){}}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function $(id){return document.getElementById(id)}
+function inr(n){return "₹"+Math.round(n).toLocaleString("en-IN")}
+function done(){return S.members.filter(function(m){return m.p})}
+function render(){
+ var a=$("app");
+ if(!ok){a.innerHTML='<div class="card" style="max-width:420px;margin:2rem auto"><h2>Start your trip</h2><p class="mut">Enter a trip name and your name. You can add your friends after you start. Using the same trip name again reopens that trip on this device.</p><label for="gc">Trip name</label><input id="gc" autocomplete="off" placeholder="e.g. Goa December"><label for="gn" style="margin-top:.8rem">Your name</label><input id="gn" autocomplete="off"><p class="err" id="ge"></p><button class="b" id="go">Start trip</button></div>';
+  $("go").onclick=function(){var t=$("gc").value.trim(),c=t.toUpperCase().replace(/\s+/g,"-"),n=$("gn").value.trim();
+  if(c.length<3){$("ge").textContent="Enter a trip name of at least 3 characters.";return}
+  var g=load(c);
+  if(!g){if(!n){$("ge").textContent="Enter your name to start this trip.";return}g={code:c,title:t,members:[{n:n+" (Organiser)",p:null}],it:null,seed:0}}
+  S=g;S.code=c;save();ok=true;tab="prefs";render()};return}
+ var names={prefs:"Preferences",sum:"Group summary",it:"Itinerary draft",priv:"Privacy"};
+ var h='<div class="row mut" style="margin-bottom:.8rem">Trip <b>'+esc(S.title||S.code)+'</b><button class="b s" id="sw" style="padding:.3rem .8rem">Switch trip</button></div><nav role="tablist">';for(var k in names)h+='<button role="tab" aria-selected="'+(tab===k)+'" data-t="'+k+'">'+names[k]+'</button>';
+ h+='</nav><div id="v"></div>';a.innerHTML=h;
+ a.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){tab=b.dataset.t;draft=null;msg="";render()}});
+ $("sw").onclick=function(){ok=false;S=null;draft=null;msg="";render()};
+ ({prefs:vPrefs,sum:vSum,it:vIt,priv:vPriv})[tab]();
+}
+function vPrefs(){
+ var v=$("v");
+ if(draft){var d=draft;v.innerHTML='<div class="card"><h2>Review before saving</h2><p class="mut">Check these details for <b>'+esc(S.members[d.i].n)+'</b>. You can edit them later.</p><table><tr><th>Budget per person</th><td>'+inr(d.p.b)+'</td></tr><tr><th>Dates</th><td>'+d.p.s+' to '+d.p.e+'</td></tr><tr><th>Destination</th><td>'+esc(d.p.d)+'</td></tr><tr><th>Interests</th><td>'+esc(d.p.ints.join(", ")||"None selected")+'</td></tr><tr><th>Accommodation</th><td>'+esc(d.p.a)+'</td></tr><tr><th>Constraints</th><td>'+esc(d.p.c||"None")+'</td></tr></table><div class="row" style="margin-top:1rem"><button class="b" id="cf">Save preferences</button><button class="b s" id="ed">Edit</button></div></div>';
+  $("cf").onclick=function(){S.members[d.i].p=d.p;save();draft=null;msg="Preferences saved for "+S.members[d.i].n+".";render()};
+  $("ed").onclick=function(){vForm(d)};return}
+ vForm(null);
+}
+function vForm(d){
+ var v=$("v"),p=d?d.p:{b:"",s:"",e:"",d:"",ints:[],a:ACC[1],c:""},i=d?d.i:S.members.findIndex(function(m){return !m.p});if(i<0)i=0;
+ var h=(msg?'<div class="note ok">'+esc(msg)+'</div>':'')+'<div class="card"><h2>Trip preferences</h2><p class="mut">Each member fills this in. You’ll review your answers before they’re saved.</p><div class="grid"><div><label for="pm">Member</label><select id="pm">';
+ S.members.forEach(function(m,j){h+='<option value="'+j+'"'+(j===i?" selected":"")+'>'+esc(m.n)+(m.p?" (submitted)":"")+'</option>'});
+ h+='</select></div><div><label for="pb">Budget per person (₹)</label><input id="pb" type="number" min="1000" step="500" value="'+esc(p.b)+'"></div><div><label for="ps">Start date</label><input id="ps" type="date" value="'+esc(p.s)+'"></div><div><label for="pe">End date</label><input id="pe" type="date" value="'+esc(p.e)+'"></div><div><label for="pd">Destination</label><input id="pd" list="dl" value="'+esc(p.d)+'" placeholder="Goa, Jaipur, Manali, Kerala or your own"><datalist id="dl"><option>Goa<option>Jaipur<option>Manali<option>Kerala</datalist></div><div><label for="pa">Accommodation needs</label><select id="pa">';
+ ACC.forEach(function(a){h+='<option'+(a===p.a?" selected":"")+'>'+a+'</option>'});
+ h+='</select></div></div><p style="margin:.9rem 0 .3rem;font-weight:600">Interests</p><div class="chips">';
+ INTS.forEach(function(t){h+='<label><input type="checkbox" value="'+t+'"'+(p.ints.indexOf(t)>-1?" checked":"")+'>'+t+'</label>'});
+ h+='</div><label for="pc">Constraints (diet, mobility, must-avoid)</label><textarea id="pc">'+esc(p.c)+'</textarea><p class="err" id="pr" role="alert"></p><div class="row"><button class="b" id="rv">Review answers</button></div></div>';
+ v.innerHTML=h;
+ $("rv").onclick=function(){
+  var b=+$("pb").value,s=$("ps").value,e=$("pe").value,dd=$("pd").value.trim(),er="";
+  if(!(b>=1000))er="Enter a budget of at least ₹1,000 per person.";
+  else if(!s||!e)er="Pick both a start and end date.";
+  else if(e<s)er="The end date must be after the start date.";
+  else if(!dd)er="Enter a destination.";
+  if(er){$("pr").textContent=er;return}
+  var ints=[].slice.call(document.querySelectorAll(".chips input:checked")).map(function(x){return x.value});
+  draft={i:+$("pm").value,p:{b:b,s:s,e:e,d:dd,ints:ints,a:$("pa").value,c:$("pc").value.trim()}};msg="";render()};
+}
+function overlap(){var ps=done().map(function(m){return m.p});if(!ps.length)return null;
+ var s=ps.map(function(p){return p.s}).sort().pop(),e=ps.map(function(p){return p.e}).sort()[0];return{s:s,e:e,ok:s<=e}}
+function mostCommon(arr){var c={};arr.forEach(function(x){var k=x.toLowerCase();c[k]=(c[k]||0)+1});var best="",n=0;for(var k in c)if(c[k]>n){n=c[k];best=k}return best?best.replace(/\b\w/g,function(x){return x.toUpperCase()}):""}
+function vSum(){
+ var ds=done(),pend=S.members.length-ds.length,h="";
+ if(pend)h+='<div class="note">'+pend+' of '+S.members.length+' members haven’t replied yet. The summary updates as they do.</div>';
+ h+='<div class="card"><h2>Who has replied</h2><div class="tw"><table><tr><th>Member</th><th>Status</th><th>Budget</th><th>Dates</th><th>Destination</th></tr>';
+ S.members.forEach(function(m){h+='<tr><td>'+esc(m.n)+'</td>'+(m.p?'<td><span class="st y">Submitted</span></td><td>'+inr(m.p.b)+'</td><td>'+m.p.s+' to '+m.p.e+'</td><td>'+esc(m.p.d)+'</td>':'<td><span class="st n">Pending</span></td><td>–</td><td>–</td><td>–</td>')+'</tr>'});
+ h+='</table></div></div>';
+ if(ds.length){var bs=ds.map(function(m){return m.p.b}),o=overlap(),ic=[];ds.forEach(function(m){ic=ic.concat(m.p.ints)});
+  h+='<div class="card"><h2>Consolidated view</h2><ul><li>Budget per person: '+inr(Math.min.apply(0,bs))+' to '+inr(Math.max.apply(0,bs))+' (plan around the lowest)</li><li>Shared dates: '+(o.ok?o.s+' to '+o.e:'No common dates yet. Members need to adjust.')+'</li><li>Most-wanted destination: '+esc(mostCommon(ds.map(function(m){return m.p.d})))+'</li><li>Top interest: '+esc(mostCommon(ic)||"None selected")+'</li><li>Accommodation: '+esc(mostCommon(ds.map(function(m){return m.p.a})))+'</li>';
+  ds.forEach(function(m){if(m.p.c)h+='<li>Constraint from '+esc(m.n)+': '+esc(m.p.c)+'</li>'});
+  h+='</ul></div>'}
+ h+='<div class="card"><h3>Add a member</h3><div class="row"><input id="nm" placeholder="Name" style="max-width:220px" aria-label="Member name"><button class="b s" id="am">Add member</button></div></div>';
+ $("v").innerHTML=h;
+ $("am").onclick=function(){var n=$("nm").value.trim();if(n){S.members.push({n:n,p:null});save();render()}};
+}
+function build(){
+ var ds=done(),o=overlap(),f=ds[0].p,dest=mostCommon(ds.map(function(m){return m.p.d}))||f.d,s=o&&o.ok?o.s:f.s,e=o&&o.ok?o.e:f.e;
+ var days=Math.min(7,Math.max(1,Math.round((new Date(e)-new Date(s))/864e5)+1)),ic=[];ds.forEach(function(m){ic=ic.concat(m.p.ints)});
+ var acc=mostCommon(ds.map(function(m){return m.p.a})),budget=Math.min.apply(0,ds.map(function(m){return m.p.b}));
+ var pool=(BANK[dest]||INTS.map(function(t,k){return[["Local highlights walk in "+dest,"Culture",300],["Try regional food in "+dest,"Food",600],["Day outing near "+dest,"Adventure",1200],["Scenic spot in "+dest,"Nature",200],["Rest and unwind in "+dest,"Relaxation",500],["Evening out in "+dest,"Nightlife",600]][k]})).slice();
+ pool.sort(function(a,b){var sa=ic.indexOf(a[1])>-1?0:1,sb=ic.indexOf(b[1])>-1?0:1;return sa-sb||(((a[0].length*7+S.seed*13)%11)-((b[0].length*7+S.seed*13)%11))});
+ var list=[],slots=["Morning","Afternoon","Evening"],cost=0,k=0;
+ for(var d=0;d<days;d++){var day=[];for(var x=0;x<3;x++){var a=pool[k%pool.length];k++;day.push({t:slots[x],x:a[0]});cost+=a[2]}list.push(day)}
+ var stay=ACCC[acc]||2800,est=cost/3*0+cost+stay*Math.max(0,days-1);
+ return{dest:dest,s:s,e:e,days:list,n:ds.length,acc:acc,est:est,budget:budget,as:["Dates are the overlap of everyone who has replied.","Destination is the most-requested one so far.","Costs are rough per-person estimates. Not checked against live prices.","Stay cost assumes "+acc.toLowerCase()+" shared by the group, with "+Math.max(0,days-1)+" night(s)."]}
+}
+function vIt(){
+ var v=$("v"),ds=done();
+ if(!ds.length){v.innerHTML='<div class="card"><h2>No itinerary yet</h2><p>Save at least one member’s preferences first, then come back to generate a draft.</p><button class="b" id="gp">Go to preferences</button></div>';$("gp").onclick=function(){tab="prefs";render()};return}
+ var it=S.it,h='<div class="card"><h2>Itinerary draft</h2><p class="mut">Built from '+ds.length+' of '+S.members.length+' members’ preferences. Review the plan before generating.</p><div class="row"><button class="b" id="gen">'+(it?"Regenerate draft":"Generate draft")+'</button></div></div>';
+ if(it){h+='<div class="note">Draft only. This is not a confirmed booking, and prices and availability are unconfirmed.</div><div class="card"><h2>'+esc(it.dest)+', '+it.s+' to '+it.e+'</h2><p class="mut">'+it.n+' member(s) · '+esc(it.acc)+'</p><div id="days">';
+  it.days.forEach(function(day,i){h+='<div class="day"><h3>Day '+(i+1)+'</h3>';day.forEach(function(a,j){h+='<div class="act"><span class="t">'+a.t+'</span><span data-d="'+i+'" data-a="'+j+'">'+esc(a.x)+'</span></div>'});h+='</div>'});
+  h+='</div><div class="row"><button class="b s" id="edt">'+(editing?"Save edits":"Edit draft")+'</button></div></div><div class="card"><h3>Estimated cost per person (unconfirmed)</h3><p>About '+inr(it.est)+' against a lowest budget of '+inr(it.budget)+'. '+(it.est>it.budget?'<b>Over budget.</b> Consider a cheaper stay or fewer paid activities.':'Within budget.')+'</p><h3>Assumptions</h3><ul>';
+  it.as.forEach(function(a){h+='<li>'+esc(a)+'</li>'});h+='</ul></div>'}
+ v.innerHTML=h;
+ $("gen").onclick=function(){if(S.it)S.seed++;S.it=build();editing=false;save();render()};
+ if(it){if(editing)document.querySelectorAll("#days [data-d]").forEach(function(s){s.contentEditable="true"});
+  $("edt").onclick=function(){if(editing){document.querySelectorAll("#days [data-d]").forEach(function(s){S.it.days[s.dataset.d][s.dataset.a].x=s.textContent});save()}editing=!editing;render()}}
+}
+function vPriv(){
+ $("v").innerHTML='<div class="card"><h2>How RoamOn uses your data</h2><p class="mut">We ask only for what planning needs.</p><div class="tw"><table><tr><th>Data</th><th>Why we ask</th></tr><tr><td>Name</td><td>To show who has replied</td></tr><tr><td>Budget, dates, destination</td><td>To build a plan the whole group can afford</td></tr><tr><td>Interests, accommodation, constraints</td><td>To suggest activities that fit everyone</td></tr></table></div><p><b>We never ask for card or payment details.</b></p></div>'+
+ '<div class="card"><h3>Who can see it</h3><p>Preferences are not shared publicly. In this version they stay on your device.</p><h3>AI and third parties</h3><p>The itinerary draft is generated from the group’s combined preferences. In this version it runs in your browser. If a future version sends data to an AI provider or flight/hotel partner, we will say so here first.</p><h3>Keeping and deleting</h3><p>This demo stores data on this device only. You can delete it at any time.</p><button class="b d" id="del">Delete all my data</button><p class="err" id="dm"></p></div>'+
+ '<div class="card"><h3>Limits of AI suggestions</h3><ul><li>Drafts can be wrong or out of date. Always review them.</li><li>Prices and availability are estimates, not confirmed.</li><li>A draft is never a booking.</li></ul></div>';
+ $("del").onclick=function(){try{localStorage.removeItem(KEY+S.code)}catch(e){}ok=false;S=null;draft=null;render();$("ge").style.color="var(--ac)";$("ge").textContent="Trip data deleted from this device."}
+}
+render();
+</script>
+</body>
+</html>
