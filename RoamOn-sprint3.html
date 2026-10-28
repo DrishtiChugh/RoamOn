@@ -115,6 +115,25 @@ function vForm(d){
  INTS.forEach(function(t){h+='<label><input type="checkbox" value="'+t+'"'+(p.ints.indexOf(t)>-1?" checked":"")+'>'+t+'</label>'});
  h+='</div><label for="pc">Constraints (diet, mobility, must-avoid)</label><textarea id="pc">'+esc(p.c)+'</textarea><p class="err" id="pr" role="alert"></p><div class="row"><button class="b" id="rv">Review answers</button></div></div>';
  v.innerHTML=h;
+ $("pm").onchange = function () {
+  var j = +$("pm").value;
+  var member = S.members[j];
+
+  var blank = {
+    b: "",
+    s: "",
+    e: "",
+    d: "",
+    ints: [],
+    a: ACC[1],
+    c: ""
+  };
+
+  vForm({
+    i: j,
+    p: member.p || blank
+  });
+};
  $("rv").onclick=function(){
   var b=+$("pb").value,s=$("ps").value,e=$("pe").value,dd=$("pd").value.trim(),er="";
   if(!(b>=1000))er="Enter a budget of at least ₹1,000 per person.";
